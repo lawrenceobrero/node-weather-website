@@ -13,15 +13,16 @@ const request = require('request')
 
 const forecast = (lat, lon, callback) => {
     const url = 'https://api.darksky.net/forecast/1c3c8f57430d3a75fa38d5582c89438c/' + lat + ',' + lon
-    request({url, json: true}, (error, {body}) => {
+    request({ url, json: true }, (error, { body }) => {
         if (error) {
             callback('Unable to connec to weather service!', undefined)
         } else if (body.error) {
             callback('Unable to find location.', undefined)
         } else {
+           // console.log(JSON.stringify(body.daily.data[0]))
             const currentTemp = body.currently.temperature
             const chanceOfRain = body.currently.precipProbability
-            callback(undefined, body.daily.data[0].summary + ' It is currently ' + currentTemp + ' degrees out. There is a ' + chanceOfRain + '% chance of rain.')
+            callback(undefined, body.daily.data[0].summary + ' It is currently ' + currentTemp + ' degrees out. There is a ' + chanceOfRain + '% chance of rain. Temperature high is ' + body.daily.data[0].temperatureHigh + ' degrees.')
         }
     })
 }
@@ -49,7 +50,7 @@ module.exports = forecast
 //     // console.log(data)
 
 //     //console.log(res.body.currently)
-    
+
 
 // } )
 
